@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lamp login page</title>
+    <link rel="stylesheet" href="stytle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <main class="room" id="room">
+        <div class="room-light" id="roomlight"></div>
+        <div class="firefiles" id="firefiles"></div>
+
+        <section class="lamp-side">
+            <div class="lamp-container" id="lampcontainer">
+                <div class="lam-glow"></div>
+                <div class="lamp-head"></div>
+                <div class="lamp-beam"></div>
+                <div class="lamp-stem"></div>
+                <div class="lamp-base"></div>
+                <div class="desk-surface"></div>
+                <svg>
+                    <path id="stringPath" d="M 0 0 L 0 80"></path>
+                </svg>
+                <div class="string-handle" id="stringHandle" role="button" tabindex="0"
+                    aria-label="Pull the lamp string to toggle the light" aria-pressed="false"></div>
+            </div>
+        </section>
+        <div class="login-side" id="loginSide" aria-hidden="true" inert>
+            <form class="glass login-card" id="loginForm" action="">
+                <!-- Login form content goes here -->
+                <div class="glass-line"></div>
+
+                <div class="login-heading">
+                    <h2>Welcome back</h2>
+                    <p>enter your credentials to continue</p>
+
+                </div>
+                <div class="inputs">
+                    <label class="input-wrap">
+                        <span class="input-icon user-icon" aria-hidden="true"></span>
+                        <input type="text" name="email" placeholder="user name" autocomplete="user name" required>
+                    </label>
+                    <label class="input-wrap">
+                        <span class="input-icon lock-icon" aria-hidden="true"></span>
+                        <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+                    </label>
+                    <label class="input-wrap">
+                        <span class="input-icon lock-icon" aria-hidden="true"></span>
+                        <input type="password" name="password" placeholder="Password" autocomplete="current-password"
+                            required>
+                    </label>
+                </div>
+                <button class="sigin-in" type="submit">Sign In</button>
+                <div class="divider">
+                    <span></span>
+                    <b>or contune with</b>
+                    <span></span>
+                </div>
+                <div class="social">
+                    <button class="social-btn">
+                        <span class="google-icon">G</span> Google
+                    </button>
+
+                    <button class="social-btn">
+                        <span class="face-icon">Y</span> youtube
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="app.js"></script>
+</body>
+
+</html>

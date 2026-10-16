@@ -1,0 +1,850 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: 'outfit', sans-serif;
+    color: #fff;
+    background-color: #050505;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: #050505;
+    overflow-x: hidden;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+.room {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 24px;
+    gap: 24px;
+    background: #050505;
+    transition: background 0.8s ease;
+}
+
+.room.on {
+    background:
+        radial-gradient(ellipse at 25% 55%, rgba(235, 182, 47, 0.13), transparent 45%),
+        #090a07;
+}
+
+.room-light {
+    position: absolute;
+    top: 50%;
+    left: 22%;
+    width: min(700px, 80vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 220, 100, 0.13) 0%, rgba(255, 214, 0, 0.04) 35%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+
+}
+
+.room.on .room-light {
+    opacity: 1;
+}
+
+.firefiles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 15;
+    overflow: hidden;
+}
+
+.firefiles span {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: #ffe458;
+    box-shadow: 0 0 7px 2px rgba(255, 220, 54, 0.75), 0 0 18px rgba(255, 204, 0, 0.5);
+    opacity: 0;
+}
+
+.room.on .firefiles span {
+    animation: firefly var(--duration) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes firefly {
+    from {
+        opacity: 0.3;
+        transform: translateY(5px) scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.15);
+    }
+}
+
+.lamp-side {
+    flex: 1 1 52%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    z-index: 5;
+    min-width: 0;
+}
+
+.lamp-container {
+    position: relative;
+    width: min(100%, 340px);
+    height: min(65vh, 420px);
+    min-height: 260px;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.lam-glow {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 170px;
+    height: 60px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(255, 224, 140, 0.5), transparent 70%);
+    filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.room.on .lam-glow {
+    opacity: 1;
+}
+
+.lamp-head {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 120px;
+    height: 42px;
+    transform: translateX(-50%);
+    border-radius: 70px 70px 3px 3px;
+    border-bottom: 2px solid #090909;
+    background: linear-gradient(#0d0d0d, #070707);
+    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.12), 0 8px 18px rgba(0, 0, 0, 0.5);
+    z-index: 6;
+    transition: box-shadow 0.5s ease;
+}
+
+.room.on .lamp-head {
+    box-shadow: inset 0 -3px 10px rgba(255, 235, 180, 0.18), inset 0 2px 5px rgba(255, 255, 255, 0.14);
+}
+
+.lamp-beam {
+    position: absolute;
+    top: 36px;
+    left: 50%;
+    width: min(440px, 115vw);
+    height: calc(100% - 42px);
+    transform: translateX(-50%);
+    clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
+    background: linear-gradient(to bottom, rgba(255, 230, 140, 0.28) 0%, rgba(255, 214, 0, 0.08) 60%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 3;
+    pointer-events: none;
+    filter: blur(8px);
+}
+
+.room.on .lamp-beam {
+    opacity: 1;
+}
+
+.lamp-stem {
+    position: absolute;
+    top: 39px;
+    bottom: 22px;
+    left: 50%;
+    width: 3px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    background: linear-gradient(90deg, #080808, #1a1a1a 50%, #080808);
+    z-index: 4;
+    transition: background 0.5s ease;
+}
+
+.room.on .lamp-stem {
+    background: linear-gradient(90deg, #17140c, #39301c 50%, #17140c);
+}
+
+.lamp-base {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 86px;
+    height: 15px;
+    transform: translateX(-50%);
+    border-radius: 18px 18px 6px 6px;
+    border-top: 1px solid #242424;
+    background: linear-gradient(#101010, #070707 75%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    z-index: 6;
+}
+
+.desk-surface {
+    position: absolute;
+    left: 50%;
+    bottom: 3px;
+    width: 150px;
+    height: 5px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #111 0%, #070707 75%, transparent 100%);
+    z-index: 5;
+}
+
+.lamp-container svg {
+    display: none;
+}
+
+.string-handle {
+    position: absolute;
+    top: 30px;
+    left: calc(50% + 39px);
+    width: 32px;
+    height: 70px;
+    z-index: 7;
+    cursor: pointer;
+    touch-action: manipulation;
+    transform: translateX(-50%);
+    transform-origin: top center;
+    transition: transform 0.2s ease;
+}
+
+.string-handle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 52px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    background: linear-gradient(90deg, #17140c, #806a36 50%, #17140c);
+}
+
+.string-handle::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 3px;
+    width: 12px;
+    height: 17px;
+    transform: translateX(-50%);
+    border: 1px solid rgba(255, 236, 171, 0.55);
+    border-radius: 6px 6px 7px 7px;
+    background: linear-gradient(90deg, #705720, #f0d17b 45%, #97772e);
+    box-shadow: 0 0 8px rgba(229, 193, 101, 0.32);
+}
+
+.string-handle:active {
+    transform: translate(-50%, 7px) rotate(8deg);
+}
+
+.string-handle:focus-visible {
+    outline: 2px solid #ffd900;
+    outline-offset: 5px;
+}
+
+.login-side {
+    flex: 0 1 410px;
+    width: 100%;
+    position: relative;
+    z-index: 5;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px) scale(0.98);
+    transition: opacity 0.55s ease, transform 0.55s ease, visibility 0.55s;
+}
+
+.room.on .login-side {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.login-card {
+    position: relative;
+    width: 100%;
+    padding: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    background: linear-gradient(145deg, rgba(54, 53, 40, 0.82), rgba(24, 24, 19, 0.88));
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4), inset 0 1px rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+}
+
+.glass-line {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+}
+
+.login-heading {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.login-heading h2 {
+    margin-bottom: 5px;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 600;
+}
+
+.login-heading p {
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 13px;
+}
+
+.inputs {
+    display: grid;
+    gap: 12px;
+}
+
+.input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 14px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 13px;
+    background: rgba(10, 10, 8, 0.66);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.input-wrap:focus-within {
+    border-color: rgba(255, 215, 0, 0.55);
+    background: rgba(10, 10, 8, 0.9);
+}
+
+.input-wrap input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    background: transparent;
+    font-size: 13px;
+}
+
+.input-wrap input::placeholder {
+    color: rgba(255, 255, 255, 0.52);
+}
+
+.input-icon {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    opacity: 0.65;
+}
+
+.user-icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 5px;
+    width: 5px;
+    height: 5px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+}
+
+.user-icon::after {
+    content: "";
+    position: absolute;
+    left: 2px;
+    bottom: 0;
+    width: 11px;
+    height: 6px;
+    border: 1px solid #fff;
+    border-radius: 7px 7px 3px 3px;
+}
+
+.lock-icon::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    bottom: 0;
+    width: 9px;
+    height: 7px;
+    border: 1px solid #fff;
+    border-radius: 2px;
+}
+
+.lock-icon::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 5px;
+    width: 5px;
+    height: 7px;
+    border: 1px solid #fff;
+    border-radius: 5px 5px 0 0;
+}
+
+.sigin-in {
+    width: 100%;
+    min-height: 46px;
+    margin-top: 18px;
+    border: 0;
+    border-radius: 13px;
+    color: #171407;
+    background: #ffd900;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.sigin-in:hover {
+    background: #ffe64a;
+    transform: translateY(-1px);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 22px 0 16px;
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.divider span {
+    height: 1px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.divider b {
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.social {
+    display: flex;
+    gap: 10px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    flex: 1;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.social-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.google-icon {
+    color: #4285f4;
+    font-weight: 700;
+}
+
+.face-icon {
+    color: #fff;
+    font-weight: 700;
+}
+
+@media (max-width: 700px) {
+    .room {
+        gap: 8px;
+        padding: 20px;
+    }
+
+    .lamp-side {
+        flex-basis: 42%;
+    }
+
+    .lamp-container {
+        height: min(54vh, 360px);
+        min-height: 230px;
+    }
+
+    .lamp-side {
+        gap: 12px;
+    }
+
+    .login-side {
+        flex-basis: 58%;
+    }
+
+    .login-card {
+        padding: 22px 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .room {
+        min-height: 100svh;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+        padding: 18px;
+    }
+
+    .lamp-side {
+        flex: 0 0 220px;
+        width: 100%;
+        gap: 4px;
+    }
+
+    .lamp-container {
+        width: 200px;
+        height: 210px;
+        min-height: 0;
+    }
+
+    .lamp-head {
+        width: 105px;
+        height: 38px;
+    }
+
+    .lamp-stem {
+        top: 35px;
+        bottom: 20px;
+    }
+
+    .lamp-base {
+        bottom: 7px;
+    }
+
+    .desk-surface {
+        bottom: 2px;
+    }
+
+    .lamp-beam {
+        top: 34px;
+        height: 175px;
+    }
+
+    .string-handle {
+        top: 27px;
+        left: calc(50% + 34px);
+        height: 62px;
+    }
+
+    .login-side {
+        flex: 0 1 auto;
+        max-width: 420px;
+    }
+
+    .room:not(.on) .login-side {
+        flex: 0 0 0;
+        max-width: 0;
+        overflow: hidden;
+    }
+
+    .room.on .login-side {
+        flex: 0 1 auto;
+        max-width: 420px;
+    }
+
+    .login-card {
+        padding: 22px;
+    }
+}
+
+@media (max-height: 420px) and (min-width: 360px) {
+    .room {
+        min-height: 100svh;
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .lamp-side {
+        flex: 0 0 47%;
+        gap: 6px;
+    }
+
+    .lamp-container {
+        width: 200px;
+        height: 86vh;
+        min-height: 0;
+    }
+
+    .lamp-head {
+        width: 84px;
+        height: 30px;
+    }
+
+    .lamp-stem {
+        top: 28px;
+        bottom: 14px;
+        width: 2px;
+    }
+
+    .lamp-base {
+        bottom: 5px;
+        width: 58px;
+        height: 10px;
+    }
+
+    .desk-surface {
+        bottom: 1px;
+        width: 94px;
+        height: 4px;
+    }
+
+    .lamp-beam {
+        top: 27px;
+        height: calc(100% - 28px);
+    }
+
+    .lam-glow {
+        width: 105px;
+        height: 38px;
+    }
+
+    .string-handle {
+        top: 23px;
+        left: calc(50% + 29px);
+        height: 58px;
+    }
+
+    .login-side {
+        flex: 1 1 53%;
+        min-width: 0;
+    }
+
+    .login-card {
+        padding: 10px 12px;
+        border-radius: 14px;
+    }
+
+    .login-heading {
+        margin-bottom: 9px;
+    }
+
+    .login-heading h2 {
+        margin-bottom: 1px;
+        font-size: 18px;
+    }
+
+    .login-heading p {
+        font-size: 9px;
+    }
+
+    .inputs {
+        gap: 5px;
+    }
+
+    .input-wrap {
+        min-height: 25px;
+        gap: 6px;
+        padding: 0 8px;
+        border-radius: 9px;
+    }
+
+    .input-wrap input {
+        font-size: 9px;
+    }
+
+    .input-icon {
+        transform: scale(0.75);
+    }
+
+    .sigin-in {
+        min-height: 25px;
+        margin-top: 8px;
+        border-radius: 9px;
+        font-size: 10px;
+    }
+
+    .divider {
+        gap: 5px;
+        margin: 8px 0 6px;
+        font-size: 7px;
+    }
+
+    .social {
+        gap: 5px;
+    }
+
+    .social-btn {
+        min-height: 24px;
+        gap: 4px;
+        border-radius: 8px;
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 760px) {
+    html,
+    body {
+        height: auto;
+    }
+
+    .room {
+        min-height: 100vh;
+        min-height: 100svh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        padding: clamp(14px, 4vw, 28px);
+        overflow: visible;
+    }
+
+    .lamp-side {
+        flex: 0 0 auto;
+        width: 100%;
+        gap: 0;
+    }
+
+    .lamp-container {
+        width: min(100%, 260px);
+        height: clamp(190px, 32svh, 290px);
+        min-height: 0;
+    }
+
+    .lamp-head {
+        width: clamp(92px, 27vw, 120px);
+        height: clamp(34px, 10vw, 42px);
+    }
+
+    .lamp-stem {
+        top: clamp(32px, 9.5vw, 39px);
+        bottom: 18px;
+    }
+
+    .lamp-beam {
+        top: clamp(31px, 9vw, 36px);
+        width: min(440px, 115vw);
+        height: calc(100% - 36px);
+    }
+
+    .lamp-base {
+        bottom: 6px;
+        width: clamp(68px, 22vw, 86px);
+    }
+
+    .desk-surface {
+        bottom: 1px;
+        width: clamp(120px, 38vw, 150px);
+    }
+
+    .string-handle {
+        top: clamp(25px, 7.5vw, 30px);
+        left: calc(50% + clamp(30px, 10vw, 39px));
+        height: clamp(58px, 18vw, 70px);
+    }
+
+    .string-handle::before {
+        height: 75%;
+    }
+
+    .string-handle::after {
+        width: 15px;
+        height: 20px;
+    }
+
+    .login-side,
+    .room.on .login-side {
+        flex: 0 0 auto;
+        width: min(100%, 440px);
+        max-width: 440px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(14px);
+    }
+
+    .room.on .login-side {
+        max-height: 800px;
+        overflow: visible;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .login-card {
+        padding: clamp(18px, 5vw, 28px);
+        border-radius: clamp(16px, 5vw, 22px);
+    }
+}
+
+@media (max-width: 360px) {
+    .room {
+        gap: 6px;
+        padding: 12px;
+    }
+
+    .lamp-container {
+        height: 185px;
+    }
+
+    .login-card {
+        padding: 16px;
+    }
+
+    .login-heading {
+        margin-bottom: 16px;
+    }
+
+    .inputs {
+        gap: 9px;
+    }
+
+    .social {
+        gap: 7px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
